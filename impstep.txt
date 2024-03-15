@@ -1,1 +1,7 @@
 celery -A myshop worker -l info
+
+http://rabbitmq:15672/#/connections
+
+celery -A myshop flower
+
+http://localhost:5555
