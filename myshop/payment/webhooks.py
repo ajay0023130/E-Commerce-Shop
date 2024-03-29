@@ -23,7 +23,7 @@ def stripe_webhook(request):
         return HttpResponse(status=400)
     if event.type == 'checkout.session.completed':
         session = event.data.object
-        print("session",session)
+        # print("session",session)
         if session.mode == 'payment' and session.payment_status == 'paid':
             try:
                 order = Order.objects.get(id=session.client_reference_id)
@@ -31,5 +31,7 @@ def stripe_webhook(request):
                 return HttpResponse(status=404)
             # mark order as paid
             order.paid = True
+            # store Stripe payment ID
+            order.stripe_id = session.payment_intent
             order.save()
     return HttpResponse(status=200)
