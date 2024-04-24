@@ -13,3 +13,6 @@ open cmd
 stripe login
 
 stripe listen --forward-to http://127.0.0.1:8000/payment/webhook/
+
+
+celery -A myshop worker --pool=solo -l info
